@@ -4,14 +4,17 @@ include_once "Venta.php";
 include_once "Pizza.php";
 
 parse_str(file_get_contents("php://input"), $post_vars);
-var_dump($post_vars);
-$auxId = $post_vars[0];
-var_dump($auxId);
+$auxId = $post_vars["id"];
+$auxMail = $post_vars["mail"];
+$auxSabor = $post_vars["sabor"];
+$auxTipo = $post_vars["tipo"];
+$auxCantidad = $post_vars["cantidad"];
+
 $listaDeVentas = array();
 $arrayIntermedio = Venta::LeerArchivoJson();
 $listaDeVentas = Venta::jsonToVenta($arrayIntermedio);
 
-ModificarVenta(3, "morenita@gmail.com", "queso", "molde", 4, $listaDeVentas);
+ModificarVenta($auxId, $auxMail, $auxSabor, $auxTipo, $auxCantidad, $listaDeVentas);
 
 function ModificarVenta($id, $mail, $sabor, $tipo, $cantidad, $array)
 {
@@ -25,6 +28,8 @@ function ModificarVenta($id, $mail, $sabor, $tipo, $cantidad, $array)
             $venta->cantidad = $cantidad;
             echo "Nuevos datos de la venta: \n";
             $venta->Mostrar();
+            Venta::GuardarVentaJson($array);
+            break;
         } else {
             echo "La venta buscada no existe\n";
         }

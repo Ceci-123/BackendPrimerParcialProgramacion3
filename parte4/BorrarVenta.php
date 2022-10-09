@@ -5,8 +5,7 @@ include_once "Pizza.php";
 
 if (!isset($_DELETE['id'])) {
     parse_str(file_get_contents("php://input"), $post_vars);
-    var_dump($post_vars);
-    $auxiliarId = $post_vars;
+    $auxiliarId = $post_vars["id"];
 
     $listaDeVentas = array();
     $arrayIntermedio = Venta::LeerArchivoJson();
